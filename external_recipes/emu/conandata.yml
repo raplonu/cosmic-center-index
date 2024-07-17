@@ -1,0 +1,4 @@
+sources:
+  "1.0.0.rc_unstable":
+    url: https://gitlab.obspm.fr/cosmic/tools/emu/-/archive/rc1.0.0/emu-rc1.0.0.tar.gz
+    sha256: 283b373a733b6d9f491a4d5f4f7ab8b71e4365a15bc5b5c05fe685cf6a4f0b42

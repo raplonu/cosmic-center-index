@@ -1,33 +1,40 @@
-<p align="center">
-    <img src="assets/JFrogConanCenter.png" width="600"/>
-</p>
+# Cosmic center index <img align="right" width="10%" src="assets/cosmic.png">
 
-Conan Center Index is the source index of recipes of the [ConanCenter](https://conan.io/center) package repository for [Conan](https://conan.io).
+Cosmic Center Index is the source index of recipes of the [Cosmic](https://cosmic.pages.obspm.fr/cosmic/) package repository for [Conan](https://conan.io).
 
-This repository includes a Continuous Integration system that will build automatically the Conan packages for the recipes submitted via
-[Pull Request](https://github.com/conan-io/conan-center-index/pulls).
+## Installation
 
-### Server Status
+`conan` is a package manager for C and C++ projects. It is designed to be portable and extensible, allowing you to install and manage dependencies for your projects.
 
-The current Conan Center Index CI status can be found on https://status.conan.io/
+We offer a script to streamline the installation of Conan and the setup of the Cosmic repository. This script will install Conan, configure it, add the Cosmic repository, and populate the local cache.
 
-Any maintenance, outage or important event related to the CI will be informed there.
-
-
-### Add ConanCenter remote
-
-ConanCenter remote is configured by default in any Conan client installation. If, for any reason, you need to add it manually, just execute:
-
-```
-conan remote add conancenter https://center.conan.io
+```bash
+curl -sS https://raw.githubusercontent.com/raplonu/cosmic-center-index/master/install.sh | bash
 ```
 
-### How to consume recipes
+It is still possible to skip some steps:
+
+```bash
+# Skip everything ! 🙈🙉🙊
+curl -sS https://raw.githubusercontent.com/raplonu/cosmic-center-index/master/install.sh | bash -s -- --skip-install --skip-configure --skip-populate
+```
+
+## Add Cosmic Center Index (WIP)
+
+Cosmic also provides for users a remote in addition of this index. To add the remote, run:
+
+```bash
+conan remote add cosmic https://conan.obspm.fr/conan
+```
+
+Remote is prefered since they are automatically updated and provide the latest version of the packages.
+
+## How to consume recipes
 
 Starting to use recipes from this repository is as easy as running
 one simple command after installing Conan:
 
-```
+```bash
 conan install name/version@ [-g <generator>]
 ```
 
@@ -40,9 +47,9 @@ and, while they are fixing some issues, they might introduce new features and
 improvements, and your project can break if you upgrade them
 ([How to prevent these breaking changes in my project?](docs/consuming_recipes.md)).
 
+## Documentation
 
-
-### Documentation
+`conan` documentation is available at [https://docs.conan.io](https://docs.conan.io/2/).
 
 All the documentation is available in this same repository in the [`docs/` subfolder](docs/README.md).
 
@@ -55,7 +62,7 @@ This is a list of shortcuts to some interesting topics:
 * :world_map: There are various community lead initiatives which are outlined in [docs/community_resources.md](docs/community_resources.md).
 * :magic_wand: To start preparing your recipes for **Conan 2.0**, please check [docs/v2_migration.md](docs/v2_migration.md).
 
-### Reporting Issues
+## Reporting Issues
 
 You can open issues in the [issue tracker](https://github.com/conan-io/conan-center-index/issues) to:
 
@@ -77,7 +84,7 @@ You can open issues in the [issue tracker](https://github.com/conan-io/conan-cen
 If your issue is not appropriate for a public discussion, please contact us via e-mail at `info@conan.io`. Thanks!
 
 
-### License
+## License
 
 All the Conan recipes in this repository are distributed under the [MIT](LICENSE) license. There
 are other files, like patches or examples used to test the packages, that could use different licenses,

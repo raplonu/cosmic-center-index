@@ -1,7 +1,6 @@
 <img src="../assets/JFrogConanCenter.png" width="600"/>
 
-This repository, ConanCenterIndex, contains recipes for the remote [JFrog ConanCenter](https://conan.io/center/).
-This remote is added by default to a clean installation of the Conan client. Recipes are contributed by opening pull requests as explained in the sections below.
+This repository, CosmicCenterIndex, contains recipes for the remote [Cosmic ConanCenter](https://conan.obspm.fr/conan).
 When pull requests are merged, the CI will upload the generated packages to the [ConanCenter](https://conan.io/center/) remote.
 
 # Documentation
@@ -10,7 +9,7 @@ When pull requests are merged, the CI will upload the generated packages to the 
 * [Changelog](changelog.md)
 
 * User documentation
-  + [Contributing to Conan Center Index](../CONTRIBUTING.md)
+  + [Contributing to Cosmic Center Index](../CONTRIBUTING.md)
   + [Developing Recipes Locally](developing_recipes_locally.md)
   + [Adding Packages to ConanCenter](adding_packages/README.md) :point_left: Best place to learn how to contribute
   + [Bumping versions to existing packages](bump_version.md)
