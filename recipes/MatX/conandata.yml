@@ -1,0 +1,12 @@
+sources:
+  "0.6.0":
+    url: https://github.com/NVIDIA/MatX/archive/refs/tags/v0.6.0.tar.gz
+    sha256: 98174abc7c6b6f3817171a396868eaffb187f65838e1a4068660817803cd84af
+  "0.7.0":
+    url: https://github.com/NVIDIA/MatX/archive/refs/tags/v0.7.0.tar.gz
+    sha256: 8563d9bd1ca713a0ad7e392103d349f80aead8d2d3741ca1a93e4e8948d835d2
+  "0.8.0":
+    url: https://github.com/NVIDIA/MatX/archive/refs/tags/v0.8.0.tar.gz
+    sha256: 088e2f2055accf39150d852118bfc384039353941fe83dfc3353e509e7eac149
+patches:
+  - patch_file: "patches/0001-ninja.patch"
