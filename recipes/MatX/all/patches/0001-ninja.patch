@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3037a2f9..0e0b3a14 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -124,7 +124,7 @@ target_include_directories(matx SYSTEM INTERFACE
+ 
+ # Set flags for compiling tests faster
+ set(MATX_CUDA_FLAGS ${CMAKE_CUDA_FLAGS} --threads 0 -ftemplate-backtrace-limit=0)
+-if (NOT CMAKE_BUILD_TYPE OR ${CMAKE_BUILD_TYPE} STREQUAL "Debug")
++if (NOT CMAKE_BUILD_TYPE OR "${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+     set(MATX_CUDA_FLAGS ${MATX_CUDA_FLAGS} -g -lineinfo)
+ endif()
+ 

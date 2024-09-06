@@ -1,0 +1,7 @@
+sources:
+  "20231122.0.0":
+    url: https://github.com/milk-org/milk/archive/1d03fa5f4a8b4ce33ea655c2146b0f46dfb946c6.zip
+    sha256: 3159de9befcda5b216b1198fb85b567d323eaca5468af302ff211fedaa95113c
+    image_stream_io:
+      url: https://github.com/milk-org/ImageStreamIO/archive/57e8dbab06c6e8f605062ec3c1b7cacff6e08be0.zip
+      sha256: ff3679f98525a880da60659acc08cd1e0634a5ae82f90f92d9d51cf3c6db5e0c
