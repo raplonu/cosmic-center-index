@@ -7,7 +7,7 @@ Modification of this script should be repercuted in the `install.sh` script.
 
 from urllib.request import urlopen, urlretrieve
 import cgi
-import tarfile, yaml
+import yaml
 from glob import glob
 from pathlib import Path
 import os, subprocess, shutil
@@ -21,18 +21,23 @@ try:
     def show_progress(block_num, block_size, total_size):
         global pbar
         if pbar is None:
-            pbar = progressbar.ProgressBar(maxval=total_size)
+            pbar = progressbar.ProgressBar(maxval=total_size if total_size > 0 else progressbar.UnknownLength)
             pbar.start()
 
         downloaded = block_num * block_size
-        if downloaded < total_size:
+        if total_size > 0 and downloaded < total_size:
             pbar.update(downloaded)
-        else:
-            pbar.finish()
-            pbar = None
+
+    def show_progress_finish():
+        global pbar
+        pbar.finish()
+        pbar = None
 
 except ImportError:
     show_progress = None
+
+    def show_progress_finish():
+        ...
 
 def download_file(url):
     remotefile = urlopen(url)
@@ -44,6 +49,7 @@ def download_file(url):
     print(f"Downloading…")
 
     urlretrieve(url, filename, show_progress)
+    show_progress_finish()
     return filename
 
 def check_sha256(file_name, expected):
@@ -64,11 +70,13 @@ def export_archive(file_name, name, user, channel):
     os.makedirs(dst_file_name, exist_ok=True)
 
     # decompress the file
-    with tarfile.open(file_name) as f:
-        dst = os.path.commonprefix(f.getnames())
-        f.extractall(dst_file_name)
+    shutil.unpack_archive(file_name, dst_file_name)
 
-    cmd = ["conan", "export", str(dst_file_name / dst), "--name", name]
+    dirs = os.listdir(dst_file_name)
+    # If extract result in a unique directory, it is consider the root.
+    package_root_dir = dst_file_name / dirs[0] if len(dirs) == 1 else dst_file_name
+
+    cmd = ["conan", "export", str(package_root_dir), "--name", name]
 
     if user: cmd.extend(["--user", user])
     if channel: cmd.extend(["--channel", channel])
