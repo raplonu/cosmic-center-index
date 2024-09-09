@@ -5,3 +5,9 @@ sources:
     image_stream_io:
       url: https://github.com/milk-org/ImageStreamIO/archive/57e8dbab06c6e8f605062ec3c1b7cacff6e08be0.zip
       sha256: ff3679f98525a880da60659acc08cd1e0634a5ae82f90f92d9d51cf3c6db5e0c
+  "20240906.0.0":
+    url: https://github.com/milk-org/milk/archive/172c6f2df0892bc9b9265cfe5cc4fcad9ce3af78.zip
+    sha256: 67d34730e901a86883392ff2e6694ef357e2ca4468b23e13ac0d42ef8aa336a3
+    image_stream_io:
+      url: https://github.com/milk-org/ImageStreamIO/archive/a70528c45e1be9dc90b3d2a2118530f097cc2484.zip
+      sha256: 2ab00a8c1084edd1b9c055f7cc96802547bcb88d92006bfb0cb50e7d5f04e71e

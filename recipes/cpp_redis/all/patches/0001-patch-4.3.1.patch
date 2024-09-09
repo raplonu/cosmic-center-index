@@ -1,0 +1,12 @@
+diff --git a/includes/cpp_redis/core/client.hpp b/includes/cpp_redis/core/client.hpp
+index 3fa05e8..b92d164 100644
+--- a/includes/cpp_redis/core/client.hpp
++++ b/includes/cpp_redis/core/client.hpp
+@@ -31,6 +31,7 @@
+ #include <queue>
+ #include <string>
+ #include <vector>
++#include <thread>
+ 
+ #include <cpp_redis/core/sentinel.hpp>
+ #include <cpp_redis/helpers/variadic_template.hpp>

@@ -1,20 +1,7 @@
-cmake_minimum_required(VERSION 2.8.12)
-project(PackageTest CXX CUDA)
+cmake_minimum_required(VERSION 3.8)
+project(test_package LANGUAGES CXX)
 
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()
+find_package(cpp_redis REQUIRED)
 
-find_package(CUDAToolkit)
-
-add_executable(example example.cpp)
-target_link_libraries(example PRIVATE ${CONAN_LIBS})
-
-if(CUDAToolkit_FOUND)
-    target_link_libraries(example PRIVATE CUDA::cudart)
-endif()
-
-# CTest is a testing tool that can be used to test your project.
-# enable_testing()
-# add_test(NAME example
-#          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
-#          COMMAND example)
+add_executable(${PROJECT_NAME} test_package.cpp)
+target_link_libraries(${PROJECT_NAME} PRIVATE cpp_redis::cpp_redis)

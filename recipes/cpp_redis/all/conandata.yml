@@ -1,0 +1,18 @@
+sources:
+  "4.4.0-beta.1":
+    url: https://github.com/cpp-redis/cpp_redis/archive/refs/tags/4.4.0-beta.1.zip
+    sha256: 3b99be9e5a46e7cfa6250ef0e305e9f43f62825129ff0d6044a1ad2500ee3a83
+    tacopie:
+      url: https://github.com/Cylix/tacopie/archive/6b060c7f7e158e60d634c14e412aa78d4041f237.zip
+      sha256: aabcfd52c73b8cb3917a8c8af1772dd00fc5f6b47a432e1b45366671702180aa
+  "4.3.1":
+    url: https://github.com/cpp-redis/cpp_redis/archive/refs/tags/4.3.1.zip
+    sha256: 01500c4c54868cb7df3712ec7a35ec1b63542cc755af3ccc608b150cf3b5eb8e
+    tacopie:
+      url: https://github.com/Cylix/tacopie/archive/243089d84a5a8032b85e81cae237b823df99abee.zip
+      sha256: 761bb2ef7c62de6157c045c66f2fa1a23010a6c082ca1ae73fc0c2d3aa5f5270
+patches:
+  "4.4.0-beta.1":
+    - patch_file: "patches/0001-patch-4.4.0-beta.1.patch"
+  "4.3.1":
+    - patch_file: "patches/0001-patch-4.3.1.patch"
