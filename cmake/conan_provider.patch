@@ -1,0 +1,11 @@
+--- toto.cmake	2024-11-14 14:20:04.230230723 +1100
++++ conan_provider.cmake	2024-11-14 14:13:41.729217372 +1100
+@@ -455,7 +455,7 @@
+ 
+ function(conan_install)
+     cmake_parse_arguments(ARGS conan_args ${ARGN})
+-    set(conan_output_folder ${CMAKE_BINARY_DIR}/conan)
++    set(conan_output_folder ${CMAKE_BINARY_DIR})
+     # Invoke "conan install" with the provided arguments
+     set(conan_args ${conan_args} -of=${conan_output_folder})
+     message(STATUS "CMake-Conan: conan install ${CMAKE_SOURCE_DIR} ${conan_args} ${ARGN}")
