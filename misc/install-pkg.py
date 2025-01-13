@@ -5,14 +5,14 @@ We recommend using the `install.sh` script instead of this script. If you want t
 Modification of this script should be repercuted in the `install.sh` script.
 '''
 
-from urllib.request import urlopen, urlretrieve
-import cgi
+from urllib.request import urlretrieve
 import yaml
 from glob import glob
 from pathlib import Path
 import os, subprocess, shutil
 import tempfile
 import hashlib
+import requests
 
 try:
     import progressbar
@@ -39,18 +39,51 @@ except ImportError:
     def show_progress_finish():
         ...
 
-def download_file(url):
-    remotefile = urlopen(url)
-    contentdisposition = remotefile.info()['Content-Disposition']
-    _, params = cgi.parse_header(contentdisposition)
-    dst_file_name = tempfile.mkdtemp()
-    filename = Path(dst_file_name, params["filename"])
+def download_file(url: str, filename: str = None) -> str:
+    """
+    Downloads a file from the given URL, using the provided filename if available.
+    If the filename is not provided, attempts to derive it from the HTTP headers or URL path.
 
-    print(f"Downloading…")
+    Args:
+        url (str): The URL of the file to download.
+        filename (str, optional): The filename to use for the downloaded file. Defaults to None.
 
-    urlretrieve(url, filename, show_progress)
+    Returns:
+        str: The path to the downloaded file in a temporary directory.
+
+    Raises:
+        ValueError: If filename cannot be determined.
+        RuntimeError: If file download fails.
+    """
+    if filename is None:
+        # Attempt to get the filename from the Content-Disposition header
+        response = requests.head(url, allow_redirects=True)
+        if 'Content-Disposition' in response.headers:
+            content_disposition = response.headers['Content-Disposition']
+            if 'filename=' in content_disposition:
+                filename = content_disposition.split('filename=')[-1].strip('"')
+
+        # If no filename in headers, derive it from the URL path
+        if not filename:
+            parsed_url = urlparse(url)
+            filename = os.path.basename(parsed_url.path)
+
+        # If still no filename, raise an error
+        if not filename:
+            raise ValueError("Cannot determine filename from URL or headers.")
+
+    # Create a temporary directory
+    temp_dir = tempfile.mkdtemp()
+
+    # Construct the full path for the file in the temporary directory
+    file_path = os.path.join(temp_dir, filename)
+
+    # Download the file
+    urlretrieve(url, file_path, show_progress)
+
     show_progress_finish()
-    return filename
+
+    return file_path
 
 def check_sha256(file_name, expected):
     result = hashlib.sha256()
@@ -97,7 +130,7 @@ def install_external_recipes():
         for version, source in conandata['sources'].items():
             print(f'\tExporting version \033[92m{version}\033[0m')
             # download the source
-            archive_file = download_file(source['url'])
+            archive_file = download_file(source['url'], source.get('filename'))
             #check sha256 if present
             if 'sha256' in source:
                 check_sha256(archive_file, source['sha256'])
