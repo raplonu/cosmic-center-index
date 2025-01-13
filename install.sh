@@ -130,8 +130,10 @@ if [[ "${SKIP_POPULATE}" == "NO" ]]; then
 
     conan remote add -t local-recipes-index $INDEX_NAME $INDEX_LOCATION --force -verror
 
-# This script is a copy of the reference implementation in misc/install-pkg.py.
-# You can use this file for test purpose ro debug.
+    pushd $INDEX_LOCATION
+
+    # This script is a copy of the reference implementation in misc/install-pkg.py.
+    # You can use this file for test purpose ro debug.
     $DEFAULT_PYTHON << END
 from urllib.request import urlretrieve
 import yaml
@@ -276,6 +278,8 @@ if __name__ == '__main__':
         print(f"An error occurred:\n{str(e)}")
 
 END
+
+    popd
 
 else
     echo -e "Skipping index populate…\n"
