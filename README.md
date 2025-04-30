@@ -6,28 +6,29 @@ Cosmic Center Index is the source index of recipes of the [Cosmic](https://cosmi
 
 `conan` is a package manager for C and C++ projects. It is designed to be portable and extensible, allowing you to install and manage dependencies for your projects.
 
-We offer a script to streamline the installation of Conan and the setup of the Cosmic repository. This script will install Conan, configure it, add the Cosmic repository, and populate the local cache.
+We offer a script to streamline the installation of Conan and the setup of the Cosmic repository. This script will install Conan and add the Cosmic repository.
 
 ```bash
-curl -sS https://raw.githubusercontent.com/raplonu/cosmic-center-index/master/install.sh | bash
+curl -sS https://raw.githubusercontent.com/raplonu/cosmic-center-index/refs/heads/main/install.sh | bash
 ```
 
 It is still possible to skip some steps:
 
 ```bash
 # Skip everything ! 🙈🙉🙊
-curl -sS https://raw.githubusercontent.com/raplonu/cosmic-center-index/master/install.sh | bash -s -- --skip-install --skip-configure --skip-populate
+curl -sS https://raw.githubusercontent.com/raplonu/cosmic-center-index/refs/heads/main/install.sh | bash -s -- --skip-install --skip-populate
 ```
 
 ## Add Cosmic Center Index (WIP)
 
-Cosmic also provides for users a remote in addition of this index. To add the remote, run:
+If you have already cloned the repository, you can add the Cosmic Center Index to your local Conan configuration by running:
 
 ```bash
-conan remote add cosmic https://conan.obspm.fr/conan
+conan remote add cosmic . -t local-recipes-index
 ```
 
-Remote is prefered since they are automatically updated and provide the latest version of the packages.
+> Since it is a local repository, you will need to pull the latest changes from the remote repository to keep it up to date. You can do this by running:
+
 
 ## How to consume recipes
 

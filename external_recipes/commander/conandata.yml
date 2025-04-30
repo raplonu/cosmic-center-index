@@ -1,4 +1,0 @@
-sources:
-  # 1.0.0 does not have sha256 because it is an unstable branche. User should be prepared for breaking change.
-  "1.0.0":
-    url: https://github.com/raplonu/commander/archive/refs/heads/main.zip
