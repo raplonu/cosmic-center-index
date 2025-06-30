@@ -62,7 +62,7 @@ class EmuConan(ConanFile):
 
             self.cpp.source.components['cuda'].includedirs = ['include/cuda', cuda_prop.include]
             self.cpp.build.components['cuda'].libdirs = [*self.cpp.build.libdirs, cuda_prop.library]
-            self.cpp.build.components['cuda'].system_libs = ['cuda', 'cudart', 'cublas']
+            self.cpp.build.components['cuda'].system_libs = ['cudart', 'cublas']
 
     def source(self):
         get(self, **self.conan_data['sources'][self.version], strip_root=True)
@@ -124,4 +124,4 @@ class EmuConan(ConanFile):
                 # linker by default will not keep emu_cuda_device_pointer because it is not used explicitly.
                 self.cpp_info.components['cuda'].exelinkflags = ['-Wl,-u,emu_cuda_device_pointer']
 
-            self.python_requires['conan_cuda'].module.append_cuda(self.cpp_info.components['cuda'], ['cuda', 'cudart', 'cublas'])
+            self.python_requires['conan_cuda'].module.append_cuda(self.cpp_info.components['cuda'], ['cudart', 'cublas'])
