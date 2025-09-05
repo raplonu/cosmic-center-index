@@ -1,3 +1,6 @@
 sources:
+  "0.1.0-rc.2":
+    url: https://github.com/raplonu/emu/archive/refs/tags/v0.1.0-rc.2.tar.gz
+    sha256: be3883f5c4698f66980601a729881c74a5bc0e47010512daf9300e8a9ed0118d
   "1.0.0":
     url: https://github.com/raplonu/emu/archive/refs/heads/rc1.0.0.zip
