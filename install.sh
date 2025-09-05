@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -Eeuo pipefail
+umask 022
 
 POSITIONAL_ARGS=()
 
-SKIP_INSTALL=NO
-SKIP_POPULATE=NO
+DO_INSTALL=NO
 
 DEFAULT_PYTHON=python3
 
@@ -14,24 +14,22 @@ INDEX_NAME="cosmic-local"
 
 FORCE=NO
 
+archive_url="https://github.com/raplonu/cosmic-center-index/archive/refs/heads/main.tar.gz"
+
 while [[ $# -gt 0 ]]; do
     case $1 in
-        -il|--index-location)
+        -l|--index-location)
             INDEX_LOCATION=$2
             shift # past argument
             shift # past value
             ;;
-        -in|--index-name)
+        -n|--index-name)
             INDEX_NAME=$2
             shift # past argument
             shift # past value
             ;;
-        -si|--skip-install)
-            SKIP_INSTALL=YES
-            shift # past argument
-            ;;
-        -sp|--skip-populate)
-            SKIP_POPULATE=YES
+        -i|--install)
+            DO_INSTALL=YES
             shift # past argument
             ;;
         -f|--force)
@@ -46,12 +44,11 @@ while [[ $# -gt 0 ]]; do
         -h|--help)
             echo "Usage: $0 [options]"
             echo "Options:"
-            echo "  -il, --index-location <path>  Set the location of the index"
-            echo "  -in, --index-name <name>      Set the name of the index"
-            echo "  -si, --skip-install           Skip the conan install"
-            echo "  -sp, --skip-populate          Skip the conan populate"
-            echo "  -f, --force                   Force the download of the index"
-            echo "  -p, --python <python>         Set the python executable to use"
+            echo "  -l, --index-location <path>   Set the location of the index (default: <conan_home>/cosmic-local-index)"
+            echo "  -n, --index-name <name>       Set the name of the index (default: cosmic-local)"
+            echo "  -i, --install                 Install conan (default: NO)"
+            echo "  -f, --force                   Force the download of the index (default: NO)"
+            echo "  -p, --python <python>         Set the python executable to use (default: python3)"
             echo "  -h, --help                    Show this help"
             exit 0
             ;;
@@ -73,7 +70,7 @@ fi
 #################
 # CONAN INSTALL #
 #################
-if [[ "${SKIP_INSTALL}" == "NO" ]]; then
+if [[ "${DO_INSTALL}" == "YES" ]]; then
     echo "Installing conan…"
 
     # Install conan if not found
@@ -93,19 +90,26 @@ fi
 ####################
 # INDEX POPULATION #
 ####################
-if [[ "${SKIP_POPULATE}" == "NO" ]]; then
-    echo "Populating the index…"
+echo "Populating the index…"
 
-    if [[ ! -d $INDEX_LOCATION ]] || [[ "$FORCE" == "YES" ]]; then
-        rm -rf $INDEX_LOCATION
-        echo "Downloading index to $INDEX_LOCATION"
-        git clone https://github.com/raplonu/cosmic-center-index.git $INDEX_LOCATION --depth 1
-    else
-        echo -e "Index location $INDEX_LOCATION already exists. Use --force to overwrite"
-    fi
+if [[ ! -d $INDEX_LOCATION ]] || [[ "$FORCE" == "YES" ]]; then
+    rm -rf $INDEX_LOCATION
+    echo "Downloading index to $INDEX_LOCATION"
+    # Download the repo archive and extract it to the index location
+    tmp_dir="$(mktemp -d)"
+    trap 'rm -rf "$tmp_dir"' EXIT
 
-    conan remote add -t local-recipes-index $INDEX_NAME $INDEX_LOCATION --force -verror
+    staging="$tmp_dir/staging"
+    mkdir -p "$staging"
 
+    # Stream + extract, don’t depend on repo-name folder; include dotfiles
+    curl -fsSL --retry 3 --retry-connrefused --connect-timeout 10 "$archive_url" \
+    | tar -xz -C "$staging" --strip-components=1 --no-same-owner
+
+    # Mirror to destination (preserve perms, include dotfiles, remove deleted files)
+    rsync -a --delete "$staging"/ "$INDEX_LOCATION"/
 else
-    echo -e "Skipping index populate…\n"
+    echo -e "Index location $INDEX_LOCATION already exists. Use --force to overwrite"
 fi
+
+conan remote add -t local-recipes-index $INDEX_NAME $INDEX_LOCATION --force -verror
