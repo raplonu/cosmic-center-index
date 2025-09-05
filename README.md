@@ -6,17 +6,27 @@ Cosmic Center Index is the source index of recipes of the [Cosmic](https://cosmi
 
 `conan` is a package manager for C and C++ projects. It is designed to be portable and extensible, allowing you to install and manage dependencies for your projects.
 
-We offer a script to streamline the installation of Conan and the setup of the Cosmic repository. This script will install Conan and add the Cosmic repository.
+We offer a script to streamline the installation of Conan and the setup of the Cosmic repository. This script will install the conan cosmic repository.
 
 ```bash
 curl -sS https://raw.githubusercontent.com/raplonu/cosmic-center-index/refs/heads/main/install.sh | bash
 ```
 
-It is still possible to skip some steps:
+The script accepts additional arguments:
 
 ```bash
-# Skip everything ! 🙈🙉🙊
-curl -sS https://raw.githubusercontent.com/raplonu/cosmic-center-index/refs/heads/main/install.sh | bash -s -- --skip-install --skip-populate
+Options:
+  -l, --index-location <path>   Set the location of the index (default: <conan_home>/cosmic-local-index)
+  -n, --index-name <name>       Set the name of the index (default: cosmic-local)
+  -i, --install                 Install conan (default: NO)
+  -f, --force                   Force the download of the index (default: NO)
+  -p, --python <python>         Set the python executable to use (default: python3)
+  -h, --help                    Show this help
+```
+
+```bash
+# Install conan 🐸 and override the repository 🖊️
+curl -sS https://raw.githubusercontent.com/raplonu/cosmic-center-index/refs/heads/main/install.sh | bash -s -- --install --force
 ```
 
 ## Add Cosmic Center Index (WIP)
