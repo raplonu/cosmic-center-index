@@ -45,7 +45,7 @@ class EmuConan(ConanFile):
         self.requires('dlpack/1.0', transitive_headers=True)
 
         if self.options.cuda:
-            self.requires('nv-cccl/3.2.0-dev', transitive_headers=True)
+            self.requires('nv-cccl/3.1.0', transitive_headers=True)
 
         if self.options.python:
             # Only required for the tests
@@ -120,11 +120,6 @@ class EmuConan(ConanFile):
         self.cpp_info.components['python'].requires = ['core']
 
         if self.options.cuda:
-            # Conan does not provide a cuda 'package'. conan_cuda allows to retrieve
-            # cuda lib dir and include dir and append it to emucuda
-            # TODO: investigate why unused.
-            cuda_prop = self.python_requires['conan_cuda'].module.properties()
-
             self.cpp_info.components['cuda'].libs = ['emucuda']
             self.cpp_info.components['cuda'].requires = [
                 'core',
@@ -136,5 +131,3 @@ class EmuConan(ConanFile):
             if not self.options.shared:
                 # linker by default will not keep emu_cuda_device_pointer because it is not used explicitly.
                 self.cpp_info.components['cuda'].exelinkflags = ['-Wl,-u,emu_cuda_device_pointer']
-
-            self.python_requires['conan_cuda'].module.append_cuda(self.cpp_info.components['cuda'], ['cudart', 'cublas'])

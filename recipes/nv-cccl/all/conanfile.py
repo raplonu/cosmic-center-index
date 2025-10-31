@@ -80,14 +80,6 @@ class NvCCCL(ConanFile):
         tc.generate()
         VirtualBuildEnv(self).generate()
 
-    # def _patch_sources(self):
-    #     # Don't look for CUDA, we're only installing the headers
-    #     replace_in_file(self, os.path.join(self.source_folder, "CMakeLists.txt"), "include(${CMAKE_CURRENT_SOURCE_DIR}/CUDA.cmake)",
-    #                                                                              """
-    #                                                                              if(NOT CUTLASS_ENABLE_HEADERS_ONLY)
-    #                                                                              include(${CMAKE_CURRENT_SOURCE_DIR}/CUDA.cmake)
-    #                                                                              endif()""")
-
     def build(self):
         # self._patch_sources()
         cmake = CMake(self)
@@ -100,17 +92,9 @@ class NvCCCL(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.set_property("cmake_file_name", "cccl")
-        # Removes the -xxx suffix from the version (e.g. 3.2.0-dev -> 3.2.0)
-        mmp_version = self.version.split('-')[0]
-        self.cpp_info.set_property("system_package_version", mmp_version)
-        # self.cpp_info.set_property("cmake_target_name", "CCCL::CCCL")
-        # self.cpp_info.set_property("cmake_module_file_name", "CCCL")
-        self.cpp_info.bindirs = []
-        self.cpp_info.libdirs = []
 
-        cmake_base_path = os.path.join("lib", "cmake", "cccl")
-        self.cpp_info.builddirs = [cmake_base_path]
+        self.cpp_info.set_property("cmake_target_name", "nv-cccl::__nv-cccl")
 
-        cmake_file = os.path.join(cmake_base_path, "cccl-config.cmake")
+        cmake_file = os.path.join("lib", "cmake", "cccl", "cccl-config.cmake")
         self.cpp_info.set_property("cmake_build_modules", [cmake_file])
+        self.cpp_info.set_property("cmake_extra_interface_libs", ["CCCL::CCCL"])
