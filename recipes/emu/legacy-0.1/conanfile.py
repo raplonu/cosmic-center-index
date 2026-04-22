@@ -45,7 +45,7 @@ class EmuConan(ConanFile):
         self.requires('dlpack/1.0', transitive_headers=True)
 
         if self.options.cuda:
-            self.requires('cccl/3.1.0', transitive_headers=True)
+            self.requires('nv-cccl/3.1.0', transitive_headers=True)
 
         if self.options.python:
             # Only required for the tests
