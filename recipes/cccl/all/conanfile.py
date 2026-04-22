@@ -12,9 +12,7 @@ required_conan_version = ">=1.52.0"
 
 
 class NvCCCL(ConanFile):
-    name = "nv-cccl"
-    deprecated = "nv-cccl is deprecated, use `cccl` in your conan file and `CCCL` in your cmake file"
-
+    name = "cccl"
     description = "CUDA Core Compute Libraries"
     license = "Apache-2.0"
     url = "https://github.com/conan-io/conan-center-index"
@@ -95,7 +93,8 @@ class NvCCCL(ConanFile):
 
     def package_info(self):
 
-        self.cpp_info.set_property("cmake_target_name", "nv-cccl::__nv-cccl")
+        self.cpp_info.set_property("cmake_file_name", "CCCL")
+        self.cpp_info.set_property("cmake_target_name", "CCCL::__nv-cccl")
 
         cmake_file = os.path.join("lib", "cmake", "cccl", "cccl-config.cmake")
         self.cpp_info.set_property("cmake_build_modules", [cmake_file])

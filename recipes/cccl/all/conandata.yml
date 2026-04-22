@@ -1,0 +1,13 @@
+sources:
+  "3.1.0":
+    url: "https://github.com/NVIDIA/cccl/releases/download/v3.1.0/cccl-src-v3.1.0.tar.gz"
+    sha256: "05cc5e710f13d01f4d56f17066fa42a9639bf9f7635718fd2c5c0d5171445e75"
+  "3.0.2":
+    url: "https://github.com/NVIDIA/cccl/releases/download/v3.0.2/cccl-src-v3.0.2.tar.gz"
+    sha256: "678c8689f88421cb0bf18ede4cb0355e5af38fa6bc5dffec15e6b23a5be59fa9"
+  "3.0.1":
+    url: "https://github.com/NVIDIA/cccl/releases/download/v3.0.1/cccl-src-v3.0.1.tar.gz"
+    sha256: "14e44389320b14a78114ace77f216abfb6084209ca91aea3a23d0c05465c9be6"
+  "3.0.0":
+    url: "https://github.com/NVIDIA/cccl/releases/download/v3.0.0/cccl-src-v3.0.0.tar.gz"
+    sha256: "6a10efb45381fd564d48f859922889e7969ddbaecbb63315ff3881552f470766"
