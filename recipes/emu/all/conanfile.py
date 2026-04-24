@@ -35,24 +35,26 @@ class EmuConan(ConanFile):
     }
 
     def requirements(self):
-        self.requires('fmt/11.2.0', transitive_headers=True, transitive_libs=True)
-        self.requires('boost/1.86.0', transitive_headers=True, transitive_libs=True)
-        self.requires('ms-gsl/4.0.0', transitive_headers=True)
-        self.requires('mdspan/0.6.0', transitive_headers=True)
-        self.requires('half/2.2.0', transitive_headers=True)
-        self.requires('tl-expected/1.2.0', transitive_headers=True)
-        self.requires('tl-optional/1.1.0', transitive_headers=True)
-        self.requires('dlpack/1.0', transitive_headers=True)
+        data = self.conan_data['requirements'][self.version]
+
+        self.requires(data['fmt'], transitive_headers=True, transitive_libs=True)
+        self.requires(data['boost'], transitive_headers=True, transitive_libs=True)
+        self.requires(data['ms-gsl'], transitive_headers=True)
+        self.requires(data['mdspan'], transitive_headers=True)
+        self.requires(data['half'], transitive_headers=True)
+        self.requires(data['tl-expected'], transitive_headers=True)
+        self.requires(data['tl-optional'], transitive_headers=True)
+        self.requires(data['dlpack'], transitive_headers=True)
 
         if self.options.cuda:
-            self.requires('cccl/3.1.0', transitive_headers=True)
+            self.requires(data['cccl'], transitive_headers=True)
 
         if self.options.python:
             # Only required for the tests
-            self.test_requires('pybind11/2.13.6')
+            self.test_requires(data['pybind11'])
 
-        self.tool_requires('cmake/[>=3.23 <4]')
-        self.test_requires('gtest/1.13.0')
+        self.tool_requires(data['cmake'])
+        self.test_requires(data['gtest'])
 
     # Cannot be optional (link to the use of cuda or not).
     python_requires = 'conan_cuda/[>=1 <2]'
@@ -101,7 +103,10 @@ class EmuConan(ConanFile):
         cmake.install()
 
     def package_info(self):
+        lib_location = 'lib' if self.settings.build_type == 'Release' else 'lib/debug'
+
         self.cpp_info.components['core'].libs = ['emucore']
+        self.cpp_info.components['core'].libdirs = [lib_location]
         self.cpp_info.components['core'].requires = [
             'fmt::fmt',
             'ms-gsl::_ms-gsl',
@@ -121,9 +126,10 @@ class EmuConan(ConanFile):
 
         if self.options.cuda:
             self.cpp_info.components['cuda'].libs = ['emucuda']
+            self.cpp_info.components['cuda'].libdirs = [lib_location]
             self.cpp_info.components['cuda'].requires = [
                 'core',
-                'nv-cccl::nv-cccl',
+                'cccl::cccl',
             ]
             #TODO: check if FMT_USE_CONSTEXPR is still needed to use {fmt} in .cu files
             self.cpp_info.components['cuda'].defines = ['EMU_CUDA', 'FMT_USE_CONSTEXPR=1']

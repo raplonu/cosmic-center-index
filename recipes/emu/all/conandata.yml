@@ -1,3 +1,21 @@
+config:
+  &v0_1_0_rc6
+    fmt: "fmt/11.2.0"
+    boost: "boost/1.86.0"
+    ms-gsl: "ms-gsl/4.0.0"
+    mdspan: "mdspan/0.6.0"
+    half: "half/2.2.0"
+    tl-expected: "tl-expected/1.2.0"
+    tl-optional: "tl-optional/1.1.0"
+    dlpack: "dlpack/1.0"
+    cccl: "cccl/3.1.0"
+    pybind11: "pybind11/2.13.6"
+    cmake: "cmake/[>=3.23 <4]"
+    gtest: "gtest/1.13.0"
+
+requirements:
+  "0.1.0-rc.6": *v0_1_0_rc6
+
 sources:
   "0.1.0-rc.6":
     url: https://github.com/raplonu/emu/archive/refs/tags/v0.1.0-rc.6.tar.gz
