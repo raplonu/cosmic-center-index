@@ -100,27 +100,29 @@ cmake --list-presets
 
 By default, conan's presets have a `conan-` prefix.
 
+For further details, please see the [Conan documentation](https://docs.conan.io/2/tutorial/consuming_packages.html).
+
 :warning: It is very important to notice that recipes will evolve over time
 and, while they are fixing some issues, they might introduce new features and
 improvements, and your project can break if you upgrade them
 ([How to prevent these breaking changes in my project?](docs/consuming_recipes.md)).
 
-## Documentation
+
+
+### Documentation
 
 `conan` documentation is available at [https://docs.conan.io](https://docs.conan.io/2/).
 
-All the documentation is available in this same repository in the [`docs/` subfolder](docs/README.md).
+Additional documentation is available in this same repository in the [`docs/` subfolder](docs/README.md).
 
 This is a list of shortcuts to some interesting topics:
 
 * :rocket: If you want to learn how to **contribute new recipes**, please read [docs/adding_packages/](docs/adding_packages/README.md).
 * :speech_balloon: **FAQ**: most common questions are listed in [docs/faqs.md](docs/faqs.md).
-* :warning: The conan-center **hook errors** reported by CCI Bot can be found in the [docs/error_knowledge_base.md](docs/error_knowledge_base.md).
 * :hammer_and_wrench: The internal changes related to infrastructure can be checked in [docs/changelog.md](docs/changelog.md).
 * :world_map: There are various community lead initiatives which are outlined in [docs/community_resources.md](docs/community_resources.md).
-* :magic_wand: To start preparing your recipes for **Conan 2.0**, please check [docs/v2_migration.md](docs/v2_migration.md).
 
-## Reporting Issues
+### Reporting Issues
 
 You can open issues in the [issue tracker](https://github.com/conan-io/conan-center-index/issues) to:
 
@@ -142,7 +144,7 @@ You can open issues in the [issue tracker](https://github.com/conan-io/conan-cen
 If your issue is not appropriate for a public discussion, please contact us via e-mail at `info@conan.io`. Thanks!
 
 
-## License
+### License
 
 All the Conan recipes in this repository are distributed under the [MIT](LICENSE) license. There
 are other files, like patches or examples used to test the packages, that could use different licenses,
