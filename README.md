@@ -6,6 +6,26 @@ Cosmic Center Index is the source index of recipes of the [Cosmic](https://cosmi
 
 `conan` is a package manager for C and C++ projects. It is designed to be portable and extensible, allowing you to install and manage dependencies for your projects.
 
+The repository comes in two flavors:
+
+> Note: It is totally fine to use both at the same time. `conan` will always try to find a matching binary package first and will then fallback to building its own using the recipe provided by one of the remotes (the first in the remote list).
+
+### Recommended: Conan gitlab repository 🌐
+
+To add it:
+
+```bash
+conan remote add cosmic https://gitlab.com/api/v4/projects/81598098/packages/conan
+```
+
+This instance will host all release versions of Cosmic's projects as well as pre-release and development version.
+
+### Legacy/backup: Conan local repository 🛖
+
+In addition of the server instance, we also maintain a conan local registry which can be cloned and referenced by conan. The repository will only reference release version of the cosmic packages.
+
+> Note: This repository only contains the recipes. The user will have to compiles the packages in order to use them using the conan flag `-b missing`.
+
 We offer a script to streamline the installation of Conan and the setup of the Cosmic repository. This script will install the conan cosmic repository.
 
 ```bash
@@ -34,11 +54,10 @@ curl -sS https://raw.githubusercontent.com/raplonu/cosmic-center-index/refs/head
 If you have already cloned the repository, you can add the Cosmic Center Index to your local Conan configuration by running:
 
 ```bash
-conan remote add cosmic . -t local-recipes-index
+conan remote add cosmic-local <path-to-cosmic-center-index-folder>
 ```
 
-> Since it is a local repository, you will need to pull the latest changes from the remote repository to keep it up to date. You can do this by running:
-
+> Since it is a local repository, you will need to pull the latest changes from the remote repository to keep it up to date.
 
 ## How to consume recipes
 
@@ -52,6 +71,34 @@ conan install name/version@ [-g <generator>]
 Of course, we really encourage you to use a `conanfile.txt` or `conanfile.py`
 to list all the requirements or your project and install them all together
 (Conan will build a single graph and ensure congruency).
+
+You can start with a simple `conanfile.txt` next to your `CMakeLists.txt` with the following content:
+
+```toml
+[requires]
+fmt/12.1.0
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[layout]
+cmake_layout
+```
+
+Then type the following command:
+
+```bash
+conan install . -b missing
+```
+
+This command will pull, compile, and generate the necessary integration files (such as CMake toolchain and find-module files) to locate the dependencies on your local machine. It also will create cmake presets that can be listed using:
+
+```bash
+cmake --list-presets
+```
+
+By default, conan's presets have a `conan-` prefix.
 
 :warning: It is very important to notice that recipes will evolve over time
 and, while they are fixing some issues, they might introduce new features and
